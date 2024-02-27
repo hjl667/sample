@@ -36,3 +36,73 @@
     transform: rotate(360deg);
   }
 }
+
+.video-background {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Adjust height as needed */
+  overflow: hidden;
+}
+
+.video-background video {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.content {
+  position: absolute;
+  z-index: 2; /* Ensures content is above the video */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff; /* Adjust text color as needed */
+}
+
+/* Style for the outer container */
+.outer-container {
+  background-color: white;
+  color: black;
+  padding: 20px;
+  /* Additional styles for smooth transitions and positioning */
+  transition: opacity 0.5s ease-in-out;
+  will-change: opacity;
+}
+
+/* Style for the inner container */
+.inner-container {
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  will-change: transform, opacity;
+}
+
+/* Ensuring that h2 has a distinct style */
+.inner-container h2 {
+  margin-bottom: 1rem; /* Adjust as needed */
+  font-size: 1.5rem; /* Adjust as needed */
+  color: #333; /* Dark grey for a bit of contrast */
+}
+
+/* Style for links to make them stand out */
+.inner-container a {
+  color: black; /* Bootstrap default blue, change as you like */
+  text-decoration: none; /* Remove underline */
+}
+
+.inner-container a:hover,
+.inner-container a:focus {
+  text-decoration: underline; /* Add underline on hover/focus for accessibility */
+  color: black; /* Darker blue on hover/focus */
+}
+
+.outer-container {
+  /* Your existing styles */
+  position: relative;
+}
+
+h2 {
+  text-align: center;
+}
