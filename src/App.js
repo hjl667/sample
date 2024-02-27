@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState, useRef } from 'react';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';// Ensure you have @mui/icons-material installed
 import { IconButton } from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -12,10 +13,20 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import {grey} from "@mui/material/colors";
 import './App.css';
+import image01 from './images/image01.png';
+import image02 from './images/image02.jpeg';
+import image03 from './images/image03.jpeg';
+import image04 from './images/image04.png';
+import {TimelineOppositeContent} from "@mui/lab";
 
 function App() {
   const [showCanvas, setShowCanvas] = useState(false);
   const canvasRef = useRef(null);
+  const [isImageVisible, setImageVisibility] = useState(false);
+
+  const toggleImageVisibility = () => {
+    setImageVisibility(!isImageVisible);
+  };
 
   const toggleCanvas = () => {
     setShowCanvas(!showCanvas);
@@ -50,6 +61,13 @@ function App() {
       url: 'https://www.home.saxo'
     }
   ];
+
+  const projectImages = {
+    'Software Developer - Hack Health': image01,
+    'Software Developer - Kodee': image02,
+    'Software Developer - The Imaginarium': image03,
+    'Data Analyst - Saxo Bank': image04,
+  };
 
   const customTypographyStyle = {
     title: {
@@ -95,7 +113,7 @@ function App() {
                     fontSize: 'calc(1.5vw + 1.5rem)', // Responsive font siz
                   }}
               >
-                welcome to my home page
+                ...scroll down to unmask...
               </Typography>
             </motion.div>
           </div>
@@ -127,11 +145,43 @@ function App() {
                 <Timeline position="alternate">
                   {timelineData.map((item, index) => (
                       <TimelineItem key={index}>
+                        <TimelineOppositeContent>
+                          <div style={{
+                            background: '#fff',
+                            border: '1px solid #ddd',
+                            boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+                            borderRadius: '4px',
+                            overflow: 'hidden',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '8px',
+                            position: 'relative',
+                            cursor: 'pointer',
+                          }} onClick={toggleImageVisibility}>
+                            {isImageVisible && (
+                                <img
+                                    src={projectImages[item.title]}
+                                    alt={item.title}
+                                    style={{
+                                      maxWidth: '80%',
+                                      maxHeight: '80%',
+                                      height: 'auto',
+                                      borderRadius: '4px',
+                                    }}
+                                />
+                            )}
+                            {!isImageVisible && (
+                                <VisibilityIcon style={{ fontSize: '3rem', color: 'lightgray' }} />
+                            )}
+                          </div>
+                        </TimelineOppositeContent>
                         <TimelineSeparator>
                           <TimelineDot />
                           {index < timelineData.length - 1 && <TimelineConnector />}
                         </TimelineSeparator>
-                        <TimelineContent >
+                        <TimelineContent>
                           <Paper elevation={3} sx={customPaperStyle}>
                             <Typography variant="h6" component="h1" style={customTypographyStyle.title}>
                               <a href={item.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -139,7 +189,8 @@ function App() {
                               </a>
                             </Typography>
                             <Typography style={customTypographyStyle.description}>
-                              {item.description}</Typography>
+                              {item.description}
+                            </Typography>
                           </Paper>
                         </TimelineContent>
                       </TimelineItem>
